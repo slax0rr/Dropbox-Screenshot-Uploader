@@ -30,8 +30,9 @@ client = dropbox.client.DropboxClient(access_token)
 # Set screenshot filename
 date = time.strftime("%d-%m-%Y-%H.%M.%S", time.localtime())
 file = '/Screenshots/SS-' + date + '.png'
-command = 'scrot -s ~/Dropbox' + file
 
+# Make the screenshot
+command = 'scrot -s ~/Dropbox' + file
 os.system(command)
 
 # wait for the file to upload

@@ -45,6 +45,10 @@ while missing == True and counter < 10:
         counter += 1
         time.sleep(1)
 
+# Check if file was uploaded
+if missing == True:
+    os.system('/usr/bin/notify-send -i gtk-dialog-infor -t 30000 -- "Screenshot upload failed" "Unable to obtain share link. File upload did not complete in time."')
+    sys.exit()
 
 # Get the share link
 link = client.share(file)

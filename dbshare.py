@@ -26,9 +26,18 @@ def which(program):
 
     return False
 
+# Open notification
+def notification(message):
+    if notify != False:
+        os.system(notify + ' -i gtk-dialog-infor -t 30000 -- "Screenshot Uploader" "' + message + '"')
+    else:
+        print message
+
+# check if required executables exist
 scrot = which('scrot')
+notify = which('notify-send')
 if scrot == False:
-    os.system('/usr/bin/notify-send -i gtk-dialog-infor -t 30000 -- "Screenshot Uploader" "Required system executable (scrot) is not available. Install it and try again."')
+    notification('Required system executable (scrot) is not available. Install it and try again.')
     sys.exit()
 
 # Get your app key and secret from the Dropbox developer website
@@ -72,7 +81,7 @@ while missing == True and counter < 10:
 
 # Check if file was uploaded
 if missing == True:
-    os.system('/usr/bin/notify-send -i gtk-dialog-infor -t 30000 -- "Screenshot upload failed" "Unable to obtain share link. File upload did not complete in time."')
+    notification('Unable to obtain share link. File upload did not complete in time.')
     sys.exit()
 
 # Get the share link
@@ -82,4 +91,4 @@ pyperclip.copy(link['url'])
 # dumb workaround to paste issue
 os.system('echo ' + link['url'] + ' | xclip')
 
-os.system('/usr/bin/notify-send -i gtk-dialog-infor -t 30000 -- "Screenshot uploaded" "Your screenshot was uploaded and link copied to clipboard (' + link['url'] + ')"')
+notification('Your screenshot was uploaded and link copied to clipboard (' + link['url'] + ')')

@@ -7,6 +7,30 @@ import json
 import dropbox
 import pyperclip
 
+# Check if system executable exists, and return full path
+def which(program):
+    import os
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return False
+
+scrot = which('scrot')
+if scrot == False:
+    os.system('/usr/bin/notify-send -i gtk-dialog-infor -t 30000 -- "Screenshot Uploader" "Required system executable (scrot) is not available. Install it and try again."')
+    sys.exit()
+
 # Get your app key and secret from the Dropbox developer website
 app_key = ''
 app_secret = ''

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Include the Dropbox SDK
 import os
 import sys
